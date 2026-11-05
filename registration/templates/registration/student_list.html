@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Directory</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'registration/style.css' %}">
+</head>
+<body>
+
+    <h1>Student Directory</h1>
+
+    <a href="{% url 'student_create' %}">Add New Student</a>
+
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search student..."
+               value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for student in students %}
+        <hr>
+        <h3>{{ student.first_name }} {{ student.last_name }}</h3>
+        <p>Student ID: {{ student.student_id }}</p>
+
+        <a href="{% url 'student_detail' student.pk %}">View</a>
+        <a href="{% url 'student_update' student.pk %}">Edit</a>
+        <a href="{% url 'student_delete' student.pk %}">Delete</a>
+
+    {% empty %}
+        <p>No students found.</p>
+    {% endfor %}
+
+</body>
+</html>
