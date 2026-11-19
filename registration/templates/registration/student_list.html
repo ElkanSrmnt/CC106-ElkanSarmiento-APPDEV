@@ -10,13 +10,17 @@
 
     <h1>Student Directory</h1>
 
-    <a href="{% url 'student_create' %}">Add New Student</a>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
 
-    <form method="GET">
-        <input type="text" name="q" placeholder="Search student..."
-               value="{{ query }}">
-        <button type="submit">Search</button>
-    </form>
+    {% if request.user.is_staff %}
+        <p><a href="{% url 'staff_dashboard' %}">Back to Dashboard</a></p>
+    {% endif %}
+
+    <a href="{% url 'student_create' %}">Add New Student</a>
 
     {% for student in students %}
         <hr>
